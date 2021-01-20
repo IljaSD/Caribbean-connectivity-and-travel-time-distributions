@@ -1,0 +1,58 @@
+#Connectivity matrix with colorbar
+
+bounds =  np.geomspace(0.1, np.max(leeg), num=320)
+#fig, ax = plt.subplots(figsize=(20, 10))
+im = plt.imshow(leeg,norm = colors.BoundaryNorm(boundaries=bounds, ncolors=320))
+plt.colorbar(im, extend='both')
+for i in range(len(leeg[:,0])):
+    for j in range(len(leeg[0])):
+        if leeg[i,j] !=0:
+            if leeg[i,j] > 100:
+                text = ax.text(j, i, round(leeg[i,j]),
+                           ha="center", va="center", color="k",fontsize=4)
+            else:     
+                text = ax.text(j, i, round(leeg[i,j]),
+                       ha="center", va="center", color="k",fontsize=6)
+plt.xticks(np.arange(len(namencompleet)), namencompleet, rotation=45, ha="right",rotation_mode="anchor",fontsize=7)
+plt.yticks(np.arange(len(namencompleet)), namencompleet,fontsize=7)      
+plt.title('Connectivity between Caribbean regions')
+plt.ylabel('Sources')
+plt.xlabel('Sinks')
+plt.show()
+
+
+#Plot Skewness matrix
+
+plt.imshow(skew, cmap='RdBu')
+plt.colorbar(extend='both')
+plt.clim(-23, 23);
+for i in range(len(skew[:,0])):
+    for j in range(len(skew[0])):
+        if round(skew[i, j])!=0:
+            text = plt.text(j, i, round(skew[i, j]),ha="center", va="center", color="darkgrey",fontsize=8)
+plt.xticks(np.arange(len(namencompleet)), namencompleet, rotation=45, ha="right",rotation_mode="anchor",fontsize=7)
+plt.yticks(np.arange(len(namencompleet)), namencompleet,fontsize=7)
+plt.title('Skew values')
+plt.ylabel('Sources')
+plt.xlabel('Sinks')
+
+
+#Plot some example time distributions
+
+plt.bar(bins[:-1],leegtime[0,39], align='edge', width = (bins[1]-bins[0]), color = 'b')
+plt.bar(bins[:-1],leegtime[23,42], align='edge', width = (bins[1]-bins[0]), color = 'limegreen',zorder=2)
+plt.bar(bins[:-1],leegtime[10,11], align='edge', width = (bins[1]-bins[0]), color = 'cyan', zorder = 2)
+plt.bar(bins[:-1],leegtime[3,1], align='edge', width = (bins[1]-bins[0]), color = 'r', zorder=2)
+plt.bar(bins[:-1],leegtime[25,26], align='edge', width = (bins[1]-bins[0]), color = 'gold', zorder=2)
+plt.bar(bins[:-1],leegtime[7,35], align='edge', width = (bins[1]-bins[0]), color = 'k')
+plt.title('Timedistributions of trajectories between islands')
+plt.xlabel('Timesteps')
+plt.ylabel('frequencies')
+blue_patch = mpatches.Patch(color='cyan', label='St. Lucia - Martinique')
+red_patch = mpatches.Patch(color='red', label='Cuba west- Cuba south',zorder=4)
+green_patch = mpatches.Patch(color='limegreen', label='Jamaica - Tobego', zorder=3)
+blu_patch = mpatches.Patch(color='b', label='Aruba - Bonaire')
+gold_patch = mpatches.Patch(color='gold', label='Nicaragua - Costa Rica', zorder=2)
+color_patch = mpatches.Patch(color='k', label='Grenada - Venezuela North')
+plt.legend(handles=[red_patch, blue_patch, green_patch,blu_patch, gold_patch, color_patch])
+plt.show
