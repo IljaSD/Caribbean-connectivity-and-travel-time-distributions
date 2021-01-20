@@ -1,0 +1,217 @@
+D = xr.open_dataset('Sim1.nc')
+pdata = D
+data = xr.open_dataset('SMOC_20190704_R20190705.nc')
+bathymetry = xr.open_dataset('gebco_2020.nc')
+mercator = xr.open_dataset('GLO-MFC_001_024_mask_bathy.nc')
+coastfield = np.load('coastfield.npy')
+
+### Create colormaps
+# Fielddata colormap - seethrough data and darkkhaki landvalues
+f_cmap = ListedColormap([0,0,0,0])
+f_cmap.set_bad(color='darkkhaki',alpha=0.1)
+
+res_cmap = ListedColormap([0,0,0,0])
+res_cmap.set_bad(color='darkkhaki')
+
+# Coastal cells colormap - seethrough to later hatch True values
+c_cmap = ListedColormap([0,0,0,0.1])
+c_cmap.set_bad(alpha=0)
+
+# Bathymetry colormap - Blues without whitest colors
+cmap = plt.get_cmap('Blues')
+b_cmap = cmap(np.arange(cmap.N)[56:])
+b_cmap = ListedColormap(b_cmap)
+b_cmap.set_bad(alpha=0.01)
+b_cmap.set_over(cmap(np.arange(cmap.N)[-1]))
+
+# Particle colormap - Yellowgreen kelp that turns coral-colored when the kelp is in a coastal cell
+p_cmap = ListedColormap('yellowgreen')
+p_cmap.set_over(color='coral')
+
+### Create colormap to color each launch_site
+launch_clist = ['purple','crimson','darkorange','gold']
+launch_cmap = ListedColormap(launch_clist)
+
+
+def figurefields(data, coastfield, mercator, lon_min, lon_max, lat_min, lat_max):
+    lon_ids = np.where(np.logical_and(data['longitude']<lon_max,data['longitude']>lon_min))
+    lon_values = data['longitude'].where(np.logical_and(data['longitude']<lon_max,data['longitude']>lon_min)).values
+    lon_values = lon_values[~np.isnan(lon_values)]
+    dlon = lon_values[1] - lon_values[0]
+    lon_corners = np.linspace(lon_values[0]-0.5*dlon,lon_values[-1]+0.5*dlon,len(lon_values)+1)
+
+    lat_ids = np.where(np.logical_and(data['latitude']<lat_max,data['latitude']>lat_min))
+    lat_values = data['latitude'].where(np.logical_and(data['latitude']<lat_max,data['latitude']>lat_min)).values
+    lat_values = lat_values[~np.isnan(lat_values)]
+    dlat = lat_values[1] - lat_values[0]
+    lat_corners = np.linspace(lat_values[0]-0.5*dlat,lat_values[-1]+0.5*dlat,len(lat_values)+1)
+
+    lon_bath_ids = np.where(np.logical_and(mercator['longitude']<lon_max,mercator['longitude']>lon_min))
+    lon_bath_values = mercator['longitude'].where(np.logical_and(mercator['longitude']<lon_max,mercator['longitude']>lon_min)).values
+    lon_bath_values = lon_bath_values[~np.isnan(lon_bath_values)]
+    dlon_bath = lon_bath_values[1] - lon_bath_values[0]
+    lon_bath_corners = np.linspace(lon_bath_values[0]-0.5*dlon_bath,lon_bath_values[-1]+0.5*dlon_bath,len(lon_bath_values)+1)
+
+    lat_bath_ids = np.where(np.logical_and(mercator['latitude']<lat_max,mercator['latitude']>lat_min))
+    lat_bath_values = mercator['latitude'].where(np.logical_and(mercator['latitude']<lat_max,mercator['latitude']>lat_min)).values
+    lat_bath_values = lat_bath_values[~np.isnan(lat_bath_values)]
+    dlat_bath = lat_bath_values[1] - lat_bath_values[0]
+    lat_bath_corners = np.linspace(lat_bath_values[0]-0.5*dlat_bath,lat_bath_values[-1]+0.5*dlat_bath,len(lat_bath_values)+1)
+
+    U = data['utotal'][0,0,lat_ids[0],lon_ids[0]]
+    V = data['vtotal'][0,0,lat_ids[0],lon_ids[0]]
+    speed = np.hypot(U,V)
+    Coast = np.ma.array(np.ones(U.shape),mask=~coastfield[lat_ids[0][0]:lat_ids[0][-1]+1,lon_ids[0][0]:lon_ids[0][-1]+1])
+    Depth = mercator['deptho'][lat_bath_ids[0],lon_bath_ids[0]]
+    
+    return lon_corners, lat_corners, lon_bath_corners, lat_bath_corners, U, V, speed, Coast, Depth
+
+
+lat_min, lat_max = (5,30)
+lon_min, lon_max = (-90,-59)
+
+lon_corners, lat_corners, lon_bath_corners, lat_bath_corners, U, V, speed, Coast, Depth = figurefields(data, coastfield, mercator, lon_min, lon_max, lat_min, lat_max)
+
+lons = copy.copy(pdata['lon'][:].values)
+lats = copy.copy(pdata['lat'][:].values)
+coasts = copy.copy(pdata['coastal'][:].values)
+
+Aruba_extent = [-70.97, -70.7, 12.36, 12.64] #0
+Cuba4_extent = [-85.18, -80, 21.35, 23.35] #1
+Cuba5_extent = [-80, -77.1, 20.3, 23] #2
+Cuba_extent = [-77.74, -77.1, 19.7, 20.3] #3
+Cuba8_extent = [-77.1, -74, 19.7, 21.85] #4
+
+Kaaiman_extent = [ -81.562328, -81, 19.200880, 19.48] #5
+Kaaiman2_extent = [ -80.15, -79.622469, 19.5, 19.856487] #6
+
+Grenada_extent = [-61.88, -61.54, 11.948, 12.3] #7
+Stvincent_extent = [-61.41, -61.02, 13.1, 13.49] #8
+klein_extent = [-61.47, -61.2,12.61,12.89] #9
+Stlucia_extent = [-61.14, -60.78, 13.62, 14.14] #10
+
+Martinique_extent = [-61.3, -60.7, 14.37, 14.97] #11
+
+Dominica_extent = [-61.55, -61.2, 15.2, 15.71] #12
+Guadeloupe_extent = [-61.88, -61.178100, 15.87, 16.502667] #13
+Montserrat_extent = [-61.97, -61.61, 16.95, 17.3] #14
+
+Basseterre_extent = [-62.97, -62.45, 17.03, 17.55] #15
+
+Bahama10_extent = [-76.73, -72.92, 22, 23.729746] #16
+Bahama9_extent = [-79.88, -79.51, 23.43, 23.76] #17
+Bahama8_extent = [-79.44, -74.29, 23.73, 27.1] #18
+Bahama7_extent = [-78.04, -77.42, 23.58, 23.73] #19
+Bahama6_extent = [-73.73, -72.86, 20.86, 21.64] #20
+    
+Caicos_extent = [-71.24, -70.93, 21.26, 21.56] #21
+Caicos2_extent = [-72.15, -71.453885, 21.589198, 21.972453] #22
+
+Jamaica_extent = [-78.525673, -76.112276, 17.68, 18.66] #23
+
+Panama_extent = [-82.52 , -77.367750, 8.513876, 9.655] #24
+
+Nicaragua_extent = [-84.148, -82.658428, 11.07, 15] #25
+ 
+Costarica_extent = [-83.698483, -82.52, 9.556435, 11.07] #26
+
+Honduras_extent = [-88.054591, -83.134081, 15, 16.047207] #27
+Honduras2_extent = [-86.64, -86.3, 16.2, 16.48]         #28       
+
+Belize_extent = [-89.212738, -88.054591, 15.7, 18.9] #29
+Belize2_extent = [-87.97,-87.69, 16.6, 16.89] #30
+
+Mexico_extent = [-90.69, -86.69, 20.165240, 21.72] #31
+Mexico_punt = [-88.054591, -87.3, 17.848166, 20.165240] #32
+
+Colombia_extent = [-77.367750, -72.003912, 7.724150, 12.56] #33
+Colombia_punt = [-72.003911, -71.03, 11.818529, 12.56] #34
+
+Venezuela_baai = [-70.3, -69.7, 11.818529, 12.3] #35
+Venezuela_extent = [-72, -61.947409, 9, 11.818529] #36
+Venezuela2_extent = [-60.97, -59.88, 8.302, 9] #37
+
+Guyana_extent = [-61.947409, -60.647409, 9, 10] #38
+
+Bonaire_extent = [-68.47, -68.11, 11.95, 12.38] #39
+Curacao_extent = [-69.22, -68.7, 11.95, 12.38] #40
+
+Trin_extent = [-61.947409, -60.864328, 10.048904, 10.909223] #41
+Tobego_extent = [-60.81, -60.44, 11.11, 11.4] #42
+
+Puerto_extent = [-67.334430, -65.18, 17.85, 18.66] #43
+
+Ha_do_extent = [-74.669609, -73.5, 17.866513, 18.8] #44
+Ha_do4_extent = [-73.5, -72, 18, 20.155497] #45
+Ha_do2_extent = [-72, -71, 17.396513, 20.005497] #46
+
+Ha_do3_extent = [-71, -68.24, 17.966513, 20.005497] #47
+
+Amerika_extent = [-82.874562, -79.85, 25.211739, 28.146579] #48
+Amerika2_extent = [-81.831747, -79.85, 24.530604, 25.211739] #49
+Maagden_extent = [-64.96, -64.62, 17.62, 17.88] # 50
+Maagden2_extent = [-65.13, -64.45, 18.2, 18.55] #51
+Out_extent = [-60, -90, 27, 7] #52
+
+
+#Make a list containing all regions
+kaart = [Aruba_extent, Cuba4_extent, Cuba5_extent,Cuba_extent, Cuba8_extent, Kaaiman_extent, Kaaiman2_extent, 
+         Grenada_extent, Stvincent_extent, klein_extent, Stlucia_extent, Martinique_extent, Dominica_extent, Guadeloupe_extent, 
+         Montserrat_extent, Basseterre_extent, Bahama8_extent, Bahama9_extent, Bahama7_extent, Bahama6_extent,
+         Bahama10_extent, Caicos_extent, Caicos2_extent, Jamaica_extent, 
+         Panama_extent, Nicaragua_extent, Costarica_extent, Honduras_extent, Honduras2_extent, Belize_extent, Belize2_extent, 
+         Mexico_extent, Mexico_punt, Colombia_extent, 
+         Colombia_punt, Venezuela_baai, Venezuela_extent, Venezuela2_extent, Guyana_extent, Bonaire_extent, 
+         Curacao_extent, Trin_extent, Tobego_extent, Puerto_extent, Ha_do_extent, Ha_do2_extent, Ha_do3_extent, Ha_do4_extent, 
+         Amerika_extent, Amerika2_extent, Maagden_extent, Maagden2_extent, 
+         Out_extent]
+
+
+gebieden=kaart
+
+#select the trajectories of region j only
+j=34
+wh = np.logical_and(np.logical_and(D['lat'] >= gebieden[j][2], D['lat'] <= gebieden[j][3]), 
+                        np.logical_and(D['lon'] >= gebieden[j][0], D['lon'] <= gebieden[j][1]))
+np.nonzero(wh)
+ids=np.unique(np.nonzero(wh)[0])
+latss = D['lat'][ids]
+lonss = D['lon'][ids]
+
+
+#Plot depth wide Caribbean region,land + borders, coastal cells and trajectories that go through coastal cells in region j.
+fig = plt.figure(figsize=(20,10))
+#fig.suptitle('titel', fontsize=18, fontweight='bold')
+gs = gridspec.GridSpec(ncols=2, nrows=1, width_ratios=[1,50], figure=fig)
+ax = fig.add_subplot(gs[0, 1],projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.PlateCarree())
+
+#Plot trajectories
+ax.plot(lonss.T,latss.T,linewidth=0.02, marker = '.', markersize = 1, color = 'limegreen')
+
+#Plot regions as red rectangles
+for i in range(len(kaart)):
+    y = [kaart[i][2], kaart[i][3]]
+    x = [kaart[i][0], kaart[i][1]]
+    ax.hlines(y, kaart[i][0], kaart[i][1], color = 'r',zorder=3)
+    ax.vlines(x, kaart[i][2], kaart[i][3], color = 'r',zorder=3)
+ax.hlines([Out_extent[2], Out_extent[3]], Out_extent[0], Out_extent[1], color = 'b',zorder=3)
+ax.vlines([Out_extent[0], Out_extent[1]], Out_extent[2], Out_extent[3], color = 'b',zorder=3)
+ax.set_xlim(-90, -60)
+ax.set_ylim(8.5, 27)
+ax.set_title('Wide Caribbean region')
+ax.add_feature(cartopy.feature.BORDERS)
+
+#Depth
+depth = ax.pcolormesh(lon_bath_corners, lat_bath_corners, Depth, cmap=b_cmap, vmax=500,zorder=2)
+
+## Depth colorbar
+axcb = fig.add_axes([0.1, 0.19, 0.02, 0.61])
+CB = plt.colorbar(depth, cax=axcb,label='Depth [m]',extend='max')
+axcb.yaxis.set_ticks_position('left')
+axcb.yaxis.set_label_position('left')
+
+#plot coastal cells
+ax.pcolor(lon_corners, lat_corners, Coast,cmap=c_cmap,facecolor='sandybrown',color='sandybrown',zorder=3)
+coastcells = mpatches.Patch(facecolor='g',edgecolor='b', label='Coastal cells')
+plt.show()
