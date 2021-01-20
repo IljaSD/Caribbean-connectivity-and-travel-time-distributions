@@ -1,5 +1,4 @@
 # Caribbean-connectivity-and-travel-time-distributions
-An analysis of the connectivity and travel time distributions of plastic pathways in the Caribbean Sea 
 
 This repository contains Python scripts used in my BSc research project on investigating connectivity and travel time distributions of plastic pathways in the Caribbean Sea.
 
