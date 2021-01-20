@@ -1,0 +1,275 @@
+#Define all regions in the Caribbean Sea
+
+Aruba_extent = [-70.97, -70.7, 12.36, 12.64] #0
+Cuba4_extent = [-85.18, -80, 21.35, 23.35] #1
+Cuba5_extent = [-80, -77.1, 20.3, 23] #2
+Cuba_extent = [-77.74, -77.1, 19.7, 20.3] #3
+Cuba8_extent = [-77.1, -74, 19.7, 21.85] #4
+
+Kaaiman_extent = [ -81.562328, -81, 19.200880, 19.48] #5
+Kaaiman2_extent = [ -80.15, -79.622469, 19.5, 19.856487] #6
+
+Grenada_extent = [-61.88, -61.54, 11.948, 12.3] #7
+Stvincent_extent = [-61.41, -61.02, 13.1, 13.49] #8
+klein_extent = [-61.47, -61.2,12.61,12.89] #9
+Stlucia_extent = [-61.14, -60.78, 13.62, 14.14] #10
+
+Martinique_extent = [-61.3, -60.7, 14.37, 14.97] #11
+
+Dominica_extent = [-61.55, -61.2, 15.2, 15.71] #12
+Guadeloupe_extent = [-61.88, -61.178100, 15.87, 16.502667] #13
+Montserrat_extent = [-61.97, -61.61, 16.95, 17.3] #14
+
+Basseterre_extent = [-62.97, -62.45, 17.03, 17.55] #15
+
+Bahama10_extent = [-76.73, -72.92, 22, 23.729746] #16
+Bahama9_extent = [-79.88, -79.51, 23.43, 23.76] #17
+Bahama8_extent = [-79.44, -74.29, 23.73, 27.1] #18
+Bahama7_extent = [-78.04, -77.42, 23.58, 23.73] #19
+Bahama6_extent = [-73.73, -72.86, 20.86, 21.64] #20
+    
+Caicos_extent = [-71.24, -70.93, 21.26, 21.56] #21
+Caicos2_extent = [-72.15, -71.453885, 21.589198, 21.972453] #22
+
+Jamaica_extent = [-78.525673, -76.112276, 17.68, 18.66] #23
+
+Panama_extent = [-82.52 , -77.367750, 8.513876, 9.655] #24
+
+Nicaragua_extent = [-84.148, -82.658428, 11.07, 15] #25
+ 
+Costarica_extent = [-83.698483, -82.52, 9.556435, 11.07] #26
+
+Honduras_extent = [-88.054591, -83.134081, 15, 16.047207] #27
+Honduras2_extent = [-86.64, -86.3, 16.2, 16.48]         #28       
+
+Belize_extent = [-89.212738, -88.054591, 15.7, 18.9] #29
+Belize2_extent = [-87.97,-87.69, 16.6, 16.89] #30
+
+Mexico_extent = [-90.69, -86.69, 20.165240, 21.72] #31
+Mexico_punt = [-88.054591, -87.3, 17.848166, 20.165240] #32
+
+Colombia_extent = [-77.367750, -72.003912, 7.724150, 12.56] #33
+Colombia_punt = [-72.003911, -71.03, 11.818529, 12.56] #34
+
+Venezuela_baai = [-70.3, -69.7, 11.818529, 12.3] #35
+Venezuela_extent = [-72, -61.947409, 9, 11.818529] #36
+Venezuela2_extent = [-60.97, -59.88, 8.302, 9] #37
+
+Guyana_extent = [-61.947409, -60.647409, 9, 10] #38
+
+Bonaire_extent = [-68.47, -68.11, 11.95, 12.38] #39
+Curacao_extent = [-69.22, -68.7, 11.95, 12.38] #40
+
+Trin_extent = [-61.947409, -60.864328, 10.048904, 10.909223] #41
+Tobego_extent = [-60.81, -60.44, 11.11, 11.4] #42
+
+Puerto_extent = [-67.334430, -65.18, 17.85, 18.66] #43
+
+Ha_do_extent = [-74.669609, -73.5, 17.866513, 18.8] #44
+Ha_do4_extent = [-73.5, -72, 18, 20.155497] #45
+Ha_do2_extent = [-72, -71, 17.396513, 20.005497] #46
+
+Ha_do3_extent = [-71, -68.24, 17.966513, 20.005497] #47
+
+Amerika_extent = [-82.874562, -79.85, 25.211739, 28.146579] #48
+Amerika2_extent = [-81.831747, -79.85, 24.530604, 25.211739] #49
+Maagden_extent = [-64.96, -64.62, 17.62, 17.88] # 50
+Maagden2_extent = [-65.13, -64.45, 18.2, 18.55] #51
+
+
+#Maak lijst met gebieden waar plastic vandaan kan komen voor in for loop
+gebieden = [Aruba_extent, Cuba4_extent, Cuba5_extent,Cuba_extent, Cuba8_extent, Kaaiman_extent, Kaaiman2_extent, 
+         Grenada_extent, Stvincent_extent, klein_extent, Stlucia_extent, Martinique_extent, Dominica_extent, Guadeloupe_extent, 
+         Montserrat_extent, Basseterre_extent, Bahama8_extent, Bahama9_extent, Bahama7_extent, Bahama6_extent,
+         Bahama10_extent, Caicos_extent, Caicos2_extent, Jamaica_extent, 
+         Panama_extent, Nicaragua_extent, Costarica_extent, Honduras_extent, Honduras2_extent, Belize_extent, Belize2_extent, 
+         Mexico_extent, Mexico_punt, Colombia_extent, 
+         Colombia_punt, Venezuela_baai, Venezuela_extent, Venezuela2_extent, Guyana_extent, Bonaire_extent, 
+         Curacao_extent, Trin_extent, Tobego_extent, Puerto_extent, Ha_do_extent, Ha_do2_extent, Ha_do3_extent, Ha_do4_extent, 
+         Amerika_extent, Amerika2_extent, Maagden_extent, Maagden2_extent]
+
+namencompleet = ['Aruba', 'Upper West Cuba', 'Cuba', 'Southern Cuba', 'Eastern Cuba', 'Cayman West', 'Cayman East', 
+                 'Grenada', 'St. Vincent North', 'St. Vincent South', 'St. Lucia', 'Martinique', 'Dominica', 'Guadeloupe',
+                 'Montserrat', 'Basseterre', 'Middle Bahamas', 'Bahama South West',
+                 'Bahama West','Bahama North','Bahama East','Caicos East', 'Caicos West', 'Jamaica', 'Panama', 
+          'Nicaragua', 'Costarica', 'Honduras', 'Honduras island','Belize', 'Belize island', 'Mexico', 'Mexico East',
+         'Colombia', 'Colombia North', 'Venezuela North', 'Venezuela','Venezuela East','Guyana', 'Bonaire', 'Curacao', 'Trinidad', 
+         'Tobego', 'Puerto Rico', 'Haïti West', 'Haïti East','Dominican Republic West','Dominican Republic East','America', 'America key west','Virgin Islands South', 'Virgin Islands North']
+
+D = xr.open_dataset('Sim1.nc')
+
+#Gebieden is a list containing the corners of all rectangular regions in the Caribbean defined before.
+
+
+#Goals: Know for every region which trajectories at what time are in a coastal cell in that region.
+#       Get number of trajectories that go from region j to i
+#       Get time it takes trajectories to go from region j to i
+#       Fit function to those time distributions and calculate chi square values to describe goodness of fit 
+
+
+
+# First: Get which trajectories at what time are in a coastal cell in that region, for all regions:
+
+#Empty list to store trajectorynumbers and times in
+trajectory_list = []
+
+#Now for every region,
+for j in range (len(gebieden)):
+    wh = np.logical_and(np.logical_and(np.logical_and(D['lat'] >= gebieden[j][2], D['lat'] <= gebieden[j][3]), 
+                        np.logical_and(D['lon'] >= gebieden[j][0], D['lon'] <= gebieden[j][1])), D['coastal'] ==1)
+    
+    # Get trajectory number and number of timestep when trajectory is in region j
+    joined_l = list(zip(np.where(wh)[0], np.where(wh)[1]))
+    obj = {}
+    
+    #Trajectories may have been detected more than one timestep in the same region. 
+    #In that case,  we want to see if these timesteps are connected or that the trjectory has left the region in between
+    # When a trajectory leaves region j and comes back later, those new timesteps are added as a sublist in the list of times:
+    
+    for item in joined_l:
+        
+        #When trajectory is 'new' in the region, add sublist containing timestep to time list
+        if item[0] not in obj:
+            obj[item[0]] = [[item[1]]]
+           
+        #when trajectorynumber is already in list,
+        else:
+            l = len(obj[item[0]])
+            l1 = len(obj[item[0]][l-1])
+            
+            #See if this time is not directly after previous time, if so: make new sublist containing time and add to time list
+            if item[1] != obj[item[0]][l-1][l1-1] + 1:
+                obj[item[0]].append([item[1]])
+                
+            # If time is directly after previous time, add time to that already existing sublist in time list
+            else:
+                obj[item[0]][l-1].append(item[1])
+                
+    #Store trajectorynumbers and times
+    trajectory_list.append(obj)
+
+    
+#Goals: Get number of trajectories that go from region j to i
+#       Get time it takes trajectories to go from region j to i
+#       Fit function to those time distributions and calculate chi square values to describe goodness of fit 
+    
+#Start with empty matrices and define bins
+bins = np.arange(0, 550, 5)
+leeg = np.zeros((len(gebieden),len(gebieden)))
+leegtime = np.zeros((len(gebieden),len(gebieden),len(bins)-1))
+
+mean = np.zeros((len(gebieden),len(gebieden)))
+skew = np.zeros((len(gebieden),len(gebieden)))
+
+chi_square = np.zeros((len(gebieden),len(gebieden),len(dist_names)))
+p_values = np.zeros((len(gebieden),len(gebieden),len(dist_names)))
+parameters = np.zeros((len(gebieden),len(gebieden),len(dist_names),2)) #change 2 accordingly to number of parameters in function you fit
+x= np.zeros((len(gebieden), len(gebieden)))
+bin_edges= np.zeros((len(gebieden), len(gebieden),len(bins)))
+
+#functions from scipy.stats that we want to fit to the time distributions
+dist_names = ['gumbel_r']
+
+
+#For all combinations of region i and j,
+for j in range (len(gebieden)):
+    for i in range(len(gebieden)):
+        listA = list(trajectory_list[j].keys())
+        listB = list(trajectory_list[i].keys())
+        
+        #Intersection_set gives the trajectorynumbers that are both detected in region i and j
+        intersection_set = np.intersect1d(listA, listB)
+        time_set = []
+        
+        #If at least one trajectory is detected in both (different) regions i and j,  
+        if j != i and len(intersection_set) > 0:
+            result_set = []
+            
+            # For all trajectories that are detected in both regions,
+            for indx in intersection_set:
+                #max_listA is a list containing all timesteps at which the trajetory left region j 
+                max_listA = [np.max(elem) for elem in trajectory_list[j][indx]]
+                min_listB = [np.min(elem) for elem in trajectory_list[i][indx]]
+                l = len(max_listA)
+                
+                # If first moment in region j was before last moment in region i, trajectory is going from j to i, not other way around
+                if np.min(max_listA) < np.max(min_listB):
+                    for a in range(0, l):
+                        for b in range(0, len(min_listB)):
+                    
+                        # Make sure only one way from j to i is counted per loop
+                        # Add time difference between time of arriving in region i and leaving region j to time_set:
+                            if a<l-1:
+                                if max_listA[a] < min_listB[b] and max_listA[a+1] > min_listB[b]:
+                                    result_set.append(indx)
+                                    time_set.append(min_listB[b] - max_listA[a])
+                                    break
+                            else: 
+                                if max_listA[a] < min_listB[b]:
+                                    dif = min_listB[b] - max_listA[a] 
+                                    result_set.append(indx)
+                                    time_set.append(dif)
+                                    break
+
+        #If no trajectories are going from region j to i or i=j, add number of trajectories that are detected both in region i and j
+        else:
+            result_set = intersection_set
+        
+        #Store number of trajectories that go from region j to i in matrix
+        leeg[j,i] = len(result_set)
+       
+    
+        #Now look at time distributions. 
+        #When trajectories go from region j to i, time_set contains the times it takes for the trajectories to do so
+        if len(time_set) > 0:
+            
+            #First standardise data using StandardScaler from sklearn
+            sc = StandardScaler()
+            timearray = np.array(time_set) 
+            time = timearray.reshape(-1,1)
+            sc.fit(time)
+            time_std = sc.transform(time)
+            
+            
+            x[j,i] = len(time_set)
+            size = len(time_set)
+            
+            #Get mean values and skewness values and histogram of standardised timedistributions
+            mean[j,i]= np.mean(time_std)
+            skew[j,i] = stats.skew(time_std)
+            leegtime[j,i],bin_edges[j,i] = np.histogram(time_set, bins)
+            std_hist,std_bins = np.histogram(time_std, len(bins)-1)
+            
+            #Now we will fit scipy.stats function to every time distribution that is the result of trajectories going from region j to i:
+            cum_observed_frequency = np.cumsum(leegtime[j,i])
+            for k,distribution in enumerate(dist_names):
+                # Set up distribution and get fitted distribution parameters
+                dist = getattr(scipy.stats, distribution)
+                param = dist.fit(time_std)
+
+                # Obtain the KS test P statistic, round it to 50 decimal places and store in a matrix
+                p = scipy.stats.kstest(time_std, distribution, args=param)[1]
+                p = np.around(p, 50)
+                p_values[j,i,k]=p    
+                param2 = dist.fit(time_set)
+
+                # Get expected counts in percentile bins
+                # This is based on a 'cumulative distrubution function' (cdf)
+                cdf_fitted = dist.cdf(std_bins, *param[:-2], loc=param[-2], 
+                                      scale=param[-1])
+                expected_frequency = []
+                for bin in range(len(std_bins)-1):
+                    expected_cdf_area = cdf_fitted[bin+1] - cdf_fitted[bin]
+                    expected_frequency.append(expected_cdf_area)
+
+                # calculate chi-squared
+                expected_frequency = np.array(expected_frequency) * size
+                cum_expected_frequency = np.cumsum(expected_frequency)
+                ss= sum(((cum_expected_frequency - cum_observed_frequency)**2)/cum_observed_frequency[-1])
+                
+                #store chi squared values of fit to every distribution in matrix
+                #Also store parameters of functions that are fitted 
+                chi_square[j,i,k] = ss
+                parameters[j,i] = param2
+                
+            
